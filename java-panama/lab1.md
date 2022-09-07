@@ -3,93 +3,70 @@
 ## Introduction
 
 
-This lab introduce yout to Project's Panama Foreign Function & Memory API.
+This lab introduce yout to the Foreign Function & Memory API which is a Preview Featture in Java 19.
 
-Estimated Time: 10 minutes
-
-### About <Product/Technology> (Optional)
-Enter background information here about the technology/feature or product used in this lab - no need to repeat what you covered in the introduction. Keep this section fairly concise. If you find yourself needing more than to sections/paragraphs, please utilize the "Learn More" section.
-
-### Objectives
-
-*List objectives for this lab using the format below*
-
-In this lab, you will:
-* Objective 1
-* Objective 2
-* Objective 3
-
-### Prerequisites (Optional)
-
-*List the prerequisites for this lab using the format below. Fill in whatever knowledge, accounts, etc. is needed to complete the lab. Do NOT list each previous lab as a prerequisite.*
-
-This lab assumes you have:
-* An Oracle Cloud account
-* All previous labs successfully completed
+Estimated Time: ~8 minutes
 
 
-*This is the "fold" - below items are collapsed by default*
 
-## Task 1: Concise Step Description
+### **About Panama's Foreign Function & Memory API**
 
-(optional) Step 1 opening paragraph.
+The Foreign Function & Memory (FFM) API introduces an API by which Java programs can interoperate with code and data outside of the Java runtime. The FFM API enables (1) to efficiently invoke **foreign functions** (i.e., code outside the JVM), and (2) to safely access **foreign memory** (i.e., memory not managed by the JVM). In practice, the FFM API defines classes and interfaces so that client code can
 
-1. Sub step 1
+   * Allocate foreign memory (`MemorySegment`, `MemoryAddress`, and `SegmentAllocator`),
+   * manipulate and access structured foreign memory (`MemoryLayout`, `VarHandle`),
+   * control the allocation and deallocation of foreign memory (`MemorySession`), and
+   * call foreign functions (`Linker`, `FunctionDescriptor`, and `SymbolLookup`).
 
-	![Image alt text](images/sample1.png)
 
-	> **Note:** Use this format for notes, hints, tips. Only use one "Note" at a time in a step.
+### **Objectives**
 
-2. Sub step 2
 
-  ![Image alt text](images/sample1.png)
+In this workshop, you will:
+* Get an overview of the FFM API and some of its key concepts.
+* Get a brief introduction to Method Handle and Var Handle, and Preview Feature.
 
-4. Example with inline navigation icon ![Image alt text](images/sample2.png) click **Navigation**.
+💡 	**Note:** This part of the workshop is theoretical as it introduces and explains some key concepts required to better understand the hands-on exercises.
 
-5. Example with bold **text**.
+## Task 1: Foreign Function & Memory API - Overview and Key Concepts
 
-   If you add another paragraph, add 3 spaces before the line.
+   At a high level, the steps required to invoke, from Java code, a foreign function are
+   
+   1. Find the target *foreign function* (in a C library)
+   
+   To find the target foreign function, the FFM API uses a *Linker*. A Linker is a bridge between two binary interfaces: the Java Virtual Machine and C ABIs (Application Binary Interface).
+   
+   2. Allocate *foreign memory*
+   
+   The Java client code needs to allocate, using the FFM API, the foreign memory, i.e. off-heap memory, required for proper operation of the native function.
+   
+   3. Obtain a method handle of the target foreign function, and invoke it
 
-## Task 2: Concise Step Description
+   To perform a downcall, the FFM API needs to know which native function to invoke. This is achieved with a *FunctionDescriptor* which describes the signature of the C function to invoke, i.e. its parameter types and its return type. To model those C types from Java, the FFM API uses different *MemoryLayout* objects.
 
-1. Sub step 1 - tables sample
+   The native function will be invoked via a corresponding Method Handle. This Method Handle is created using the corresponding FunctionDescriptor.
+   
+   
 
-  Use tables sparingly:
+💡 	**Note:** This section above describes, at a high-level, how a *downcall* (Java code calling native code) is performed but the Linker interoperates in both-direction and also enables *upcall* (native code calling Java code). Upcalls will be discussed in a later section.
 
-  | Column 1 | Column 2 | Column 3 |
-  | --- | --- | --- |
-  | 1 | Some text or a link | More text  |
-  | 2 |Some text or a link | More text |
-  | 3 | Some text or a link | More text |
 
-2. You can also include bulleted lists - make sure to indent 4 spaces:
+## Task 2: Method Handle & Var Handle Overview
 
-    - List item 1
-    - List item 2
+Up to this point, we have introduced new concepts introduced by Foreign Function & Memory API. We now should briefly discuss about Method Handle and Var Handle as they are leveraged by the FFM API. **TODO**
 
-3. Code examples
+## Task 3: Preview Feature
 
-    ```
-    Adding code examples
-  	Indentation is important for the code example to appear inside the step
-    Multiple lines of code
-  	<copy>Enclose the text you want to copy in <copy></copy>.</copy>
-    ```
+To conclude this section, we need to discuss Preview Feature as you will be using Java 19. **TODO - Preview Features**
 
-4. Code examples that include variables
 
-	```
-  <copy>ssh -i <ssh-key-file></copy>
-  ```
 
 ## Learn More
 
-*(optional - include links to docs, white papers, blogs, etc)*
 
-* [URL text 1](http://docs.oracle.com)
-* [URL text 2](http://docs.oracle.com)
+* [java.lang.foreign](https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/lang/foreign/package-summary.html) Javadoc **TODO update to GA links**
 
 ## Acknowledgements
-* **Author** - <Name, Title, Group>
-* **Contributors** -  <Name, Group> -- optional
-* **Last Updated By/Date** - <Name, Month Year>
+* **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
+* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
+* **Last Updated By/Date** - David Delabassée, Sept. 4 2022

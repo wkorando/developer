@@ -8,6 +8,10 @@
             "filename": "../../introduction.md"
         },
         {
+            "title": "Lab 1: Cloud Shell and Cloud Editor",
+            "filename": "../../cloudshell.md"
+        },
+        {
             "title": "Lab 1: Foreign Function & Memory API introduction",
             "filename": "../../lab1.md"
         },

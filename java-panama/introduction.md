@@ -2,41 +2,44 @@
 
 ## About this Workshop
 
-This introduction covers the complete "parent" workshop. Use this text to set up the story for the workshop. Be engaging - what will the learner get from spending their time on this workshop?
 
-Estimated Workshop Time: -- hours -- minutes (This estimate is for the entire workshop - it is the sum of the estimates provided for each of the labs included in the workshop.)
+Project Panama is an OpenJDK project whose goal is to improve and enrich the connections between the Java Virtual Machine and well-defined but “foreign” (non-Java) APIs, including many interfaces commonly used by C programmers. In a nutshell, Panama eases the interaction between Java code and native code, in both ways.
 
+Project Panama also tackles Single Intrsuction Mulitple Data programming in Java. SIMD is a programming technique that leverages Vector units embedded in CPUs to produce more performant code. 
+
+In practive, there are, in Java 19, 2 APIs that were developed under the Panama umbrella:
+- the Foreign Function & Memory API (Preview)
+- the Vector API (Fourth Incubator)
+Moreover, jextract is a tool also developed under the same umbrella.
+
+The goal of this workshop is to introduce you to Project Panama, its 2 APIs, and the jextract tool. 
+
+Estimated Workshop Time: ~75 minutes
 
 ### Objectives
 
-*List objectives for the workshop*
 
-In this workshop, you will learn how to:
-* Provision
-* Setup
-* Load
-* Query
+In this workshop, you will learn:
+* the challenges of writing Java code that interoperate with native code, and why it matters
+* how to use Foreign Function & Memory API
+* how to use jextract, and the benefits it offers
+* the concept of SIMD programming
+* how to use the Vector API
+
 
 ### Prerequisites (Optional)
 
-*List the prerequisites for this lab using the format below. Fill in whatever knowledge, accounts, etc. is needed to complete the lab. **Do NOT list** each previous lab as a prerequisite.*
-
 This lab assumes you have:
-* An Oracle account
-* All previous labs successfully completed
+* some Java skills
+* some Linux skills
 
-*This is the "fold" - below items are collapsed by default*
-
-In general, the Introduction does not have Steps.
 
 ## Learn More
 
-*(optional - include links to docs, white papers, blogs, etc)*
-
-* [URL text 1](http://docs.oracle.com)
-* [URL text 2](http://docs.oracle.com)
+* Panama section on [Inside Java](https://inside.java/tag/panama)
+* [Dev.Java](https://dev.java)
 
 ## Acknowledgements
-* **Author** - <Name, Title, Group>
-* **Contributors** -  <Name, Group> -- optional
-* **Last Updated By/Date** - <Name, Month Year>
+* **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
+* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
+* **Last Updated By/Date** - David Delabassée, Sept. 2 2022
