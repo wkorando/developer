@@ -8,27 +8,27 @@
             "filename": "../../introduction.md"
         },
         {
-            "title": "Lab 1: Cloud Shell and Cloud Editor",
-            "filename": "../../cloudshell.md"
+            "title": "Lab 1: Your workshop environment",
+            "filename": "../../environment.md"
         },
         {
-            "title": "Lab 1: Foreign Function & Memory API introduction",
+            "title": "Lab 2: Foreign Function & Memory API",
             "filename": "../../lab1.md"
         },
         {
-            "title": "Lab 2: Working with C ABI",
+            "title": "Lab 3: A Simple Downcall",
             "filename": "../../lab2.md"
         },
         {
-            "title": "Lab 3: Using jextract",
+            "title": "Lab 4: Using jextract",
             "filename": "../../lab3.md"
         },
         {
-            "title": "Lab 4: Vector API introduction",
+            "title": "Lab 6: Vector API introduction",
             "filename": "../../lab4.md"
         },
         {
-            "title": "Lab 5 (optional): Native Variadic Functions",
+            "title": "Lab 7: (optional): Native Variadic Functions",
             "description": "optional lab",
             "filename": "../../lab5.md"
         }
