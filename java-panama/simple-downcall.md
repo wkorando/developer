@@ -1,4 +1,4 @@
-# LAB 2: Downcalls
+# LAB 3: A simple Downcall
 
 ## Introduction
 

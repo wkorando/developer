@@ -13,24 +13,32 @@
         },
         {
             "title": "Lab 2: Foreign Function & Memory API",
-            "filename": "../../lab1.md"
+            "filename": "../../ffm-intro.md"
         },
         {
             "title": "Lab 3: A Simple Downcall",
-            "filename": "../../lab2.md"
+            "filename": "../../simple-downcall.md"
         },
         {
-            "title": "Lab 4: Using jextract",
-            "filename": "../../lab3.md"
+            "title": "Lab 4: Downcalls in more details",
+            "filename": "../../downcall-more-details.md"
         },
         {
-            "title": "Lab 6: Vector API introduction",
-            "filename": "../../lab4.md"
+            "title": "Lab 5: Upcalls",
+            "filename": "../../upcall.md"
         },
         {
-            "title": "Lab 7: (optional): Native Variadic Functions",
+            "title": "Lab 6: Using jextract",
+            "filename": "../../jextract.md"
+        },
+        {
+            "title": "Lab 7: Vector API introduction",
+            "filename": "../../vector-api-intro.md"
+        },
+        {
+            "title": "Lab 8 (optional): TBD Native Variadic Functions",
             "description": "optional lab",
-            "filename": "../../lab5.md"
+            "filename": "../../optional.md"
         }
     ]
 }

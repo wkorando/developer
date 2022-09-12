@@ -1,9 +1,9 @@
-#  Introduction to the Vector API 
+#  Upcalls
 
 ## Introduction
 
 
-This lab introduces you to SIMD programming and the Vector API.
+This lab introduces you to ...
 
 Estimated Time: 15 minutes
 
