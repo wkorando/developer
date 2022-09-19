@@ -8,8 +8,16 @@
             "filename": "../../lab-0-introduction.md"
         },
         {
-            "title": "Lab 1: Your workshop environment",
+            "title": "Your workshop environment",
             "filename": "../../lab-1-environment.md"
+        },
+        {
+            "title": "Records, First Steps",
+            "filename": "../../lab-records-1-intro.md"
+        },
+        {
+            "title": "Record, Customizing Construction",
+            "filename": "../../lab-records-2-construction.md"
         }
     ]
 }

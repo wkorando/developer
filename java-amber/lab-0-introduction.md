@@ -25,6 +25,7 @@ Estimated Workshop Time: ~TODO minutes
 
 In this workshop, you will learn:
 
+* how to work with records
 * TODO
 
 ### Prerequisites
