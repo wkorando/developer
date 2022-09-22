@@ -22,6 +22,7 @@ Probably the most straightforward way is to create a final class with final fiel
 Here is an example of such a class:
 
 ```java
+<copy>
 public class Point {
 	private final int x;
 	private final int y;
@@ -31,6 +32,7 @@ public class Point {
 		this.y = y;
 	}
 }
+</copy>
 ```
 
 But that's not all.
@@ -47,7 +49,9 @@ Records are here to help you make this code much simpler.
 Starting with Java SE 14, you can write the following:
 
 ```java
+<copy>
 public record Point(int x, int y) {}
+</copy>
 ```
 
 What comes in parenthesis after the type name, here `int x` and `int y`, are called the record's _components_.
@@ -70,14 +74,17 @@ Most importantly, a record clearly communicates to compiler, runtime, and cowork
 💪 To create your first record, create a file `Point.java` and add the following line:
 
 ```java
-<copy>public record Point(int x, int y) { }</copy>
+<copy>
+public record Point(int x, int y) { }
+</copy>
 ```
 
 To experiment with it, create a second file `Main.java` with a `main` method and create some `Point` instances.
 You could, for example, print an instance to see the default `toString()` implementation in action or create two points with the same coordinates and observe that they are `equal`:
 
 ```java
-<copy>public class Main {
+<copy>
+public class Main {
 
 	public static void main(String[] args) {
 		var pointA = new Point(0, 0);
@@ -85,7 +92,8 @@ You could, for example, print an instance to see the default `toString()` implem
 		System.out.println(pointA + " equal " + pointB + "? ~> " + pointA.equals(pointB));
 	}
 
-}</copy>
+}
+</copy>
 ```
 
 Congratulations on creating your first record!

@@ -29,6 +29,7 @@ A possible exception is a record that has a mutable collection as field (which i
 As an exercise, take the following `Node` that can form a tree (if cycles are prevented):
 
 ```java
+<copy>
 public record Node(int id, List<Node> children) {
 
 	public Node {
@@ -36,6 +37,7 @@ public record Node(int id, List<Node> children) {
 	}
 
 }
+</copy>
 ```
 
 💪 Note how its compact constructor ensures that `children` is a mutable list, probably to later offer explicit methods that update it.
@@ -45,10 +47,12 @@ Give that a try.
 The solution looks as follows:
 
 ```java
+<copy>
 @Override
 public List<Node> children() {
 	return Collections.unmodifiableList(children);
 }
+</copy>
 ```
 
 ## Task 2: Override `equals`, `hashCode`, or `toString`
@@ -66,6 +70,7 @@ Calling `toString()` on the tree's root will print the entire tree, which may be
 The solution should look something like this:
 
 ```java
+<copy>
 @Override
 public boolean equals(Object o) {
 	if (this == o)
@@ -84,6 +89,7 @@ public int hashCode() {
 public String toString() {
 	return "Node[id=" + id + ']';
 }
+</copy>
 ```
 
 ### Sidetrack
@@ -93,12 +99,14 @@ You've probably heard about type patterns with `instanceof` - they make implemen
 Take a look at this:
 
 ```java
+<copy>
 @Override
 public boolean equals(Object o) {
 	return this == o
 			|| o instanceof Node node
 			&& id == node.id;
 }
+</copy>
 ```
 
 If you're not sure why that works, learn up on type patterns.
@@ -116,9 +124,11 @@ As a rule of thumb, it's usually a good idea to limit them to their own fields o
 Your solution might look as follows:
 
 ```java
+<copy>
 public void removeChildren() {
 	children.clear();
 }
+</copy>
 ```
 
 
@@ -132,6 +142,7 @@ Records can hence not extend other classes but they can implement interfaces jus
 Your solution should look something like this:
 
 ```java
+<copy>
 public record Node(int id, List<Node> children) implements Comparable<Node> {
 
 	// [...]
@@ -142,6 +153,7 @@ public record Node(int id, List<Node> children) implements Comparable<Node> {
 	}
 
 }
+</copy>
 ```
 
 

@@ -32,7 +32,9 @@ Examples for situations where you need to do that are:
 💪 As an example for the first, create a file `Range.java` with the following line:
 
 ```java
-<copy>public record Range(int start, int end) { }</copy>
+<copy>
+public record Range(int start, int end) { }
+</copy>
 ```
 
 💪 Assuming the range must be well-defined, `end` should not be smaller than `start`.
@@ -41,7 +43,8 @@ To achieve that, write a constructor just like for a class with fields `start` a
 The solution should look something like this:
 
 ```java
-<copy>public record Range(int start, int end) {
+<copy>
+public record Range(int start, int end) {
 
 	public Range(int start, int end) {
 		if (end < start) {
@@ -50,7 +53,8 @@ The solution should look something like this:
 		this.start = start;
 		this.end = end;
 	}
-}</copy>
+}
+</copy>
 ```
 
 ## Task 2: Using The Compact Constructor
@@ -70,14 +74,16 @@ The result is called the _compact_ (canonical) constructor and its behavior is e
 This boils the example down to:
 
 ```java
-<copy>public record Range(int start, int end) {
+<copy>
+public record Range(int start, int end) {
 
 	public Range {
 		if (end < start) {
 			throw new IllegalArgumentException("End cannot be smaller than start");
 		}
 	}
-}</copy>
+}
+</copy>
 ```
 
 The obvious effect is that it reduces the amount of code but the more relevant effects are:
@@ -95,7 +101,8 @@ Go ahead and expand the compact constructor you wrote with that functionality.
 The result should look as follows:
 
 ```java
-<copy>public record Range(int start, int end) {
+<copy>
+public record Range(int start, int end) {
 
 	public Range {
 		if (end < start) {
@@ -108,7 +115,8 @@ The result should look as follows:
 			end = 0;
 		}
 	}
-}</copy>
+}
+</copy>
 ```
 
 ## Task 3: Defining Additional Constructors
@@ -122,7 +130,8 @@ So it's good practice to put all verification or mutation of arguments into the 
 The result should look as follows:
 
 ```java
-<copy>public record Range(int start, int end) {
+<copy>
+public record Range(int start, int end) {
 
 	public Range {
 		if (end < start) {
@@ -140,7 +149,8 @@ The result should look as follows:
 		this(0, end);
 	}
 
-}</copy>
+}
+</copy>
 ```
 
 ## Task 4: Factory Methods And Constructor Visibility
@@ -155,7 +165,8 @@ Reading it does not make clear that it creates a range from 0 to the given argum
 A static factory method with a good name would make that clearer:
 
 ```java
-<copy>public record Range(int start, int end) {
+<copy>
+public record Range(int start, int end) {
 
 	public Range {
 		if (end < start) {
@@ -174,7 +185,8 @@ A static factory method with a good name would make that clearer:
 		return new Range(0, end);
 	}
 
-}</copy>
+}
+</copy>
 ```
 
 
