@@ -3,93 +3,120 @@
 ## Introduction
 
 
-This lab guides you to Virtual Threads, and the related API.
+This lab guides you through Virtual Threads and related API.
 
-Estimated Time: -- minutes
+Estimated Time: 25 minutes
 
-### About <Product/Technology> (Optional)
-Enter background information here about the technology/feature or product used in this lab - no need to repeat what you covered in the introduction. Keep this section fairly concise. If you find yourself needing more than to sections/paragraphs, please utilize the "Learn More" section.
 
 ### Objectives
 
-*List objectives for this lab using the format below*
-
 In this lab, you will:
-* Objective 1
-* Objective 2
-* Objective 3
+* Create virtual threads
+* Join virtual threads to platform threads
+* Yield virtual threads
 
 ### Prerequisites (Optional)
 
-*List the prerequisites for this lab using the format below. Fill in whatever knowledge, accounts, etc. is needed to complete the lab. Do NOT list each previous lab as a prerequisite.*
+If you haven't already clone the repository: 
 
-This lab assumes you have:
-* An Oracle Cloud account
-* All previous labs successfully completed
+Move to the `org.paumard.loom.virtualthread` package, which contains the code for completing this lab. 
 
 
-*This is the "fold" - below items are collapsed by default*
+Virtual Threads are a preview feature in JDK 19. You will need to enable preview features at compile and runtime explicitly. The below command demonstrates how to compile with preview features: 
 
-## Task 1: Concise Step Description
+```
+javac --enable-preview --release 19 Main.java
+```
 
-(optional) Step 1 opening paragraph.
+Running code with preview features would look like this:
+```
+java --enable-preview Main
+```
 
-1. Sub step 1
+You can learn more about preview features here: [https://dev.java/learn/using-the-preview-features-available-in-the-jdk/](https://dev.java/learn/using-the-preview-features-available-in-the-jdk/).
 
-	![Image alt text](images/sample1.png)
 
-	> **Note:** Use this format for notes, hints, tips. Only use one "Note" at a time in a step.
+## Task 1: Version Check
 
-2. Sub step 2
+Open `A_VersionCheck`.
 
-  ![Image alt text](images/sample1.png)
+This first class is just there to ensure that you are running the correct version of Java. Also, make sure that you have enabled preview features. You need to run this class.
 
-4. Example with inline navigation icon ![Image alt text](images/sample2.png) click **Navigation**.
 
-5. Example with bold **text**.
+## Task 2: Starting Threads
 
-   If you add another paragraph, add 3 spaces before the line.
+Open `B_StartingThreads`.
 
-## Task 2: Concise Step Description
+You can just run this class and see what it prints. The main thread is a platform thread. What is the number of this thread?
 
-1. Sub step 1 - tables sample
 
-  Use tables sparingly:
+## Task 3: Starting Virtual Threads
 
-  | Column 1 | Column 2 | Column 3 |
-  | --- | --- | --- |
-  | 1 | Some text or a link | More text  |
-  | 2 |Some text or a link | More text |
-  | 3 | Some text or a link | More text |
+Open `C_StartingThreads`.
 
-2. You can also include bulleted lists - make sure to indent 4 spaces:
+Let us now see how to create and launch virtual threads.
 
-    - List item 1
-    - List item 2
+First, Loom brings a new pattern to start platform threads. Platform threads and virtual threads are running tasks, instances of `Runnable`.
 
-3. Code examples
+So let us create a first task that prints the current thread. The current thread is the thread that is running this task.
 
-    ```
-    Adding code examples
-  	Indentation is important for the code example to appear inside the step
-    Multiple lines of code
-  	<copy>Enclose the text you want to copy in <copy></copy>.</copy>
-    ```
+Loom also brings new patterns to create and launch platform threads. You need to call `join()` to ensure that this thread has enough time to run. Check the code of this class to see this pattern.
 
-4. Code examples that include variables
+Then try to find a similar pattern to start a virtual thread. Create a new virtual thread with the name "virtual", identical to the previous platform thread, and start it.
 
-	```
-  <copy>ssh -i <ssh-key-file></copy>
-  ```
+Do not forget to call `join()` on this virtual thread. You need to configure your IDE so that the preview features of your JDK 19 are enabled.
+
+How can you tell the thread you created is a virtual thread?
+
+What is platform thread used to run this virtual thread?
+
+You can also explore these two patterns and see how you can customize the threads you are launching.
+
+## Task 4: Yielding Virtual Threads
+
+Open `D_YieldingVirtualThreads`.
+
+Let us now create a bunch of virtual threads and see how they can jump from one platform thread to another. This is a feature that is unique to Loom virtual threads.
+
+You need to create an unstarted virtual thread in the code that does the following:
+
+* If the index is 0, then print the current thread,
+* then go to sleep for a few milliseconds; 20 is enough.
+* If the index is 0, then print the current thread again,
+* then go to sleep again,
+* If the index is 0, print the current thread one last time.
+
+What platform thread is running your virtual thread?
+
+Can you see your virtual thread jumping from one platform thread to the other?
+
+Does blocking a virtual thread block a platform thread?
+
+Try to decrease the number of virtual threads you are creating. Do you still see this behavior?
+
+Because blocking a Loom virtual thread is so cheap, trying to pool them becomes useless. 
+
+## Task 5: How Many Platform Threads
+
+Open `E_HowManyPlatformThreads`.
+
+Let us discover how many platform threads you need to run your virtual threads.
+
+There are two concurrent sets created in this class, one to store the name of the pooled platform threads used by default and the other to store the name of the platform threads.
+
+You can paste the code from the previous exercise here. Then, you can call the two methods `readThreadPoolName()` and `readPlatformThreadName()` and add the pool name and the platform thread name in the corresponding sets.
+
+How many pools is Loom using?
+
+How many platform threads have been used for your virtual threads?
+
+You can try to increase the number of virtual threads to see if this number varies. You can also try to run this code on a machine with a different number of cores to see how this number changes.
 
 ## Learn More
 
-*(optional - include links to docs, white papers, blogs, etc)*
-
-* [URL text 1](http://docs.oracle.com)
-* [URL text 2](http://docs.oracle.com)
+* [Virtual Threads - JEP 425](https://openjdk.org/jeps/425)
 
 ## Acknowledgements
-* **Author** - <Name, Title, Group>
-* **Contributors** -  <Name, Group> -- optional
-* **Last Updated By/Date** - <Name, Month Year>
+* **Author** - José Paumard, Java Developer Advocate, Java Platform Group
+* **Contributors** -  Billy Korando, Java Developer Advocate, Java Platform Group
+* **Last Updated By/Date** - Billy Korando, September 2022
