@@ -67,7 +67,7 @@ Most importantly, a record clearly communicates to compiler, runtime, and cowork
 
 ## Task 3: Your First Record
 
-To create your first record, create a file `Point.java` and add the following line:
+💪 To create your first record, create a file `Point.java` and add the following line:
 
 ```java
 <copy>public record Point(int x, int y) { }</copy>

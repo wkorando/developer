@@ -1,16 +1,21 @@
-# Record, Customizing Construction
+# Records, Customizing Construction
 
 ## Introduction
 
-This lab introduces you to the concept of records
+This lab dives deeper into how record construction can be customized
 
 Estimated Time: ~TODO minutes
 
 ### **Objectives**
 
-In this lab, you will:
+In this lab, you will learn how to:
 
-* TODO
+* override a record's canonical constructor
+* use the compact constructor
+* define additional constructors and static factory methods
+
+The topic of constructing records is important because as data carriers, it's central to their design that they only represent legal states of the system.
+It should not be possible to successfully create an instance of a record that is in an illegal state and it's the constructor's job to make sure of that.
 
 ## Task 1: Overriding The Canonical Constructor
 
@@ -24,13 +29,13 @@ Examples for situations where you need to do that are:
 2. You need to replace illegal arguments with legal ones.
 3. You need to make a defensive copy of a mutable component.
 
-As an example for the first, create a file `Range.java` with the following line:
+💪 As an example for the first, create a file `Range.java` with the following line:
 
 ```java
 <copy>public record Range(int start, int end) { }</copy>
 ```
 
-Assuming the range must be well-defined, `end` should not be smaller than `start`.
+💪 Assuming the range must be well-defined, `end` should not be smaller than `start`.
 To achieve that, write a constructor just like for a class with fields `start` and `end` and throw an `IllegalArgumentException` if `end` is smaller than `start`.
 
 The solution should look something like this:
@@ -50,7 +55,7 @@ The solution should look something like this:
 
 ## Task 2: Using The Compact Constructor
 
-Because overriding the canonical constructor is common, records make this case easier.
+💪 Because overriding the canonical constructor is common, records make this case easier.
 Revisit the constructor you just write and:
 
 * remove the list of arguments, including the parenthesis
@@ -84,7 +89,7 @@ Note that a compact constructor not only doesn't _require_ you to assign fields,
 So if you need to assign a different value to the field than the argument, you can't do that directly.
 Instead, you need to reassign the desired value to the parameter.
 
-As an example, consider ranges that must be positive and where any `start` or `end` below zero is replaced with zero.
+💪 As an example, consider ranges that must be positive and where any `start` or `end` below zero is replaced with zero.
 Go ahead and expand the compact constructor you wrote with that functionality.
 
 The result should look as follows:
@@ -112,7 +117,7 @@ Just like classes, records can have additional constructors but unlike in classe
 Since recursive constructor calls are forbidden, this means all constructor calls eventually end with the canonical constructor.
 So it's good practice to put all verification or mutation of arguments into the canonical constructor and then call that from other constructors.
 
-As an example, add an additional constructor to `Range` that only accepts the `end` parameter and uses it to create a range from 0 to `end`.
+💪 As an example, add an additional constructor to `Range` that only accepts the `end` parameter and uses it to create a range from 0 to `end`.
 
 The result should look as follows:
 
