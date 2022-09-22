@@ -4,7 +4,7 @@
 
 This lab explores more ways to customize records
 
-Estimated Time: ~TODO minutes
+Estimated Time: ~20 minutes
 
 ### **Objectives**
 

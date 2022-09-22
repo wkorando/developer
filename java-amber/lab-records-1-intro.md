@@ -4,7 +4,7 @@
 
 This lab introduces you to the concept of records
 
-Estimated Time: ~TODO minutes
+Estimated Time: ~15 minutes
 
 ### **Objectives**
 

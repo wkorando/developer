@@ -19,7 +19,7 @@ And it is working on more features, some of them in preview in Java 19:
 
 The goal of this workshop is to introduce you to the new language features that Project Amber introduced and is previewing.
 
-Estimated Workshop Time: ~TODO minutes
+Estimated Workshop Time: ~90 minutes
 
 ### Objectives
 
@@ -27,14 +27,12 @@ In this workshop, you will learn:
 
 * how to work with records
 * how to work with text blocks
-* TODO
 
 ### Prerequisites
 
 This lab assumes you have:
 
 * good Java skills
-* TODO
 
 
 ## Learn More

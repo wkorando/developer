@@ -4,7 +4,7 @@
 
 This lab dives deeper into how record construction can be customized
 
-Estimated Time: ~TODO minutes
+Estimated Time: ~20 minutes
 
 ### **Objectives**
 
