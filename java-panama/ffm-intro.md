@@ -117,6 +117,7 @@ Such a warning can be disabled with the `--enable-native-access=M` flag on the j
 
 
 * [JEP 424: Foreign Function & Memory API (Preview)](https://openjdk.org/jeps/424)
+* [Video: Project Panama: Say Goodbye to JNI](https://inside.java/2022/04/04/projectpanama/)
 * [Using the Preview Features Available in the JDK](https://dev.java/learn/using-the-preview-features-available-in-the-jdk/)
 
 ## Acknowledgements
