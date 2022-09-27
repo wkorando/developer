@@ -18,7 +18,7 @@ In this lab, you will write your first downcall.
 In this lab, you will develop a simple Java application that will invoke the native C `atoi` function to convert a string to an int. 
 
 
-> The [C `atoi` function](https://cplusplus.com/reference/cstdlib/atoi/) has the following signature: `int atoi ( const char * str );`
+> The [C `atoi` function](https://cplusplus.com/reference/cstdlib/atoi/) is part of the [C standard library](https://en.wikipedia.org/wiki/C_standard_library) and has the following signature: `int atoi ( const char * str );`
 It parses the C-string `str` interpreting its content as an integral number, which is returned as a value of type `int`, it returns zero if no conversion is performed.
 
 As mentioned earlier, the steps to perform a downcall are:
@@ -31,12 +31,12 @@ As mentioned earlier, the steps to perform a downcall are:
 
 1. Create the class
 
-Using Cloud Editor, open the "lab" directory and create a file named "Lab2.java" with the following skeleton.
+Using Cloud Editor, open the "lab" directory and create a file named "Simple.java" with the following skeleton.
 
 
 ```java
 <copy>
-public class Lab2 {
+public class Simple {
 
     public static void main(String[] args) throws Throwable {
         String payload = "21";
@@ -109,7 +109,7 @@ import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import static java.lang.foreign.ValueLayout.*;
 
-public class Task {
+public class Simple {
 
     public static void main(String[] args) throws Throwable {
         String payload = "21";
@@ -142,7 +142,7 @@ You can now compile and test the class. Do keep in mind that the FFM API is a Pr
 
 
 ```java
-<copy>javac --enable-preview --release 19 Task.java</copy>
+<copy>javac --enable-preview --release 19 Simple.java</copy>
 ```
 
 The javac compiler will inform you that you are using Preview Feature. This is not a warning, so there's nothing to worry about.
@@ -155,25 +155,24 @@ Note: Recompile with -Xlint:preview for details.
 Preview features should also be enabled at runtime.
 
 ```java
-<copy>java --enable-preview Task</copy>
+<copy>java --enable-preview Simple</copy>
 ```
 
 You can get rid of the FFM warnings but also perform the compilation and execution in a single command.
 
 ```text
-<copy>java --enable-preview --source 19 --enable-native-access=ALL-UNNAMED Task.java</copy>
+<copy>java --enable-preview --source 19 --enable-native-access=ALL-UNNAMED Simple.java</copy>
 ```
 
 💡 Notice that in this case, you are passing a *.java* source file to the Java launcher instead of an usual *.class* compiled class.
 
 
    
-## Conclusions
+## Conclusion
 
-Congratulations, you just wrote your first down call using the Foreign Function & Memory API. Now using a native function to perform such a simple conversion is, at best, a convoluted approach. The point here was to show you the different steps. Also, this example has been simplified as it doesn't, for example, deal with error handling (ex. what if a lookup fails?). Some of those points will be discussed later.
+Congratulations, you just wrote your first downcall using the Foreign Function & Memory API! Now using a native function to perform such a trivial conversion is, at best, a convoluted approach. A simple `java.lang.Integer.valueOf(int)`would do the same job more easily but that's not the point. The point here is to show you the different steps required to invoke, from Java, a foreign function. Also, this example has been simplified as it doesn't, for example, deal with error handling (ex. what if a lookup fails?). Some of those points will be discussed later.
 
-Finally, you might also think that the FFM API requires writing a lot of code.  One thing to notice though is that you didn't write any C code, a clear benefit over the JNI API.
-But you would be right, that is still a lot of code to write. And that is where the tooling and more specifically jextract will be useful; jextract will be discussed later.
+Finally, you might also think that the FFM API requires writing a lot of code. One thing to notice though is that you didn't write any C code, a clear benefit over the JNI API. But you would be right, that is still a lot of 'infrastructure' code to write. And that is where the tooling and more specifically `jextract` will be useful, a topic that will be discussed later.
 
 You can now move to the next section.
 
@@ -181,4 +180,4 @@ You can now move to the next section.
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
 * **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
-* **Last Updated By/Date** - David Delabassée, Sept. 6 2022
+* **Last Updated By/Date** - David Delabassée, Sept. 10 2022

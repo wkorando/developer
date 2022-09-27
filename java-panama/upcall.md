@@ -3,12 +3,10 @@
 ## Introduction
 
 
-This lab introduces you to ...
+This lab introduces you to upcalls, i.e. native C code invoking some Java code via the FFM API.
 
 Estimated Time: 15 minutes
 
-### About <Product/Technology> (Optional)
-Enter background information here about the technology/feature or product used in this lab - no need to repeat what you covered in the introduction. Keep this section fairly concise. If you find yourself needing more than to sections/paragraphs, please utilize the "Learn More" section.
 
 ### Objectives
 
@@ -19,18 +17,42 @@ In this lab, you will:
 * Objective 2
 * Objective 3
 
-### Prerequisites (Optional)
 
-*List the prerequisites for this lab using the format below. Fill in whatever knowledge, accounts, etc. is needed to complete the lab. Do NOT list each previous lab as a prerequisite.*
+## Task 1: Short Pointer Primer
 
-This lab assumes you have:
-* An Oracle Cloud account
-* All previous labs successfully completed
+There are 2 ways to pass parameters to a function in C: (1) by value, and (2) by reference, i.e. using a pointer. For instance, the C `puts` function accepts as parameter a pointer to a _char_ array. Given that Java does not expose pointers to developers, the concept of pointer is obscure if not unknown to most Java developers. In short, a pointer is "simply" a variable whose value is the address of another variable.
+
+```
+int puts(const char* s);```
+
+💡 The asterisk * is used to declare a pointer. 
+
+Native C types such as _int_, _char_, _struct_, etc., can be accessed through pointers. In addition to pointing to some data, a pointer can also point to C function. A function pointer is a variable that stores the address of a function, function that can later be invoked through this function pointer.
 
 
-*This is the "fold" - below items are collapsed by default*
+```c
+#include <stdio.h>
 
-## Task 1: Concise Step Description
+int main() {
+    int (*putsPtr) (const char*);
+    putsPtr = &puts;
+    putsPtr("Hello-hello! Long time no see!");
+
+    return 0;
+}
+```
+
+Let's look  more closely at the snippet above. It starts with a pointer declaration. This pointer is named `putsPtr` and points to a function that accepts `const char*` as parameter, and returns an `int` value. 
+```c
+int (*putsPtr) (const char*);
+```
+This a just a pointer declaration. `putsPtr` is only bound to a specific funtion, i.e. to the 'puts' function of the C stdio library in this case, at the assignment. 
+
+```c
+putsPtr = &puts;
+```
+
+Following this pattern a pointer to C printf would have the following form:
 
 (optional) Step 1 opening paragraph.
 

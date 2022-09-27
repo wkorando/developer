@@ -3,7 +3,7 @@
 ## Introduction
 
 
-This lab introduce yout to the Foreign Function & Memory API which is a Preview Featture in Java 19.
+This lab introduces you to the Foreign Function & Memory API, a Preview Feature of Java 19.
 
 Estimated Time: ~8 minutes
 
@@ -11,7 +11,7 @@ Estimated Time: ~8 minutes
 
 ### **About Panama's Foreign Function & Memory API**
 
-The Foreign Function & Memory (FFM) API, defined in JEP 424, introduces an API by which Java programs can interoperate with code and data outside of the Java runtime. The FFM API enables (1) to efficiently invoke **foreign functions** (i.e., code outside the JVM), and (2) to safely access **foreign memory** (i.e., memory not managed by the JVM). In practice, the FFM API defines classes and interfaces so that client code can
+The Foreign Function & Memory (FFM) API, defined in JEP 424, introduces an API by which Java programs can interoperate with code and data outside of the Java runtime. The FFM API enables (1) to efficiently invoke **foreign functions** (i.e., code outside the JVM) and (2) to safely access **foreign memory** (i.e., memory not managed by the JVM). In practice, the FFM API defines classes and interfaces so that client code can
 
    * Allocate foreign memory (`MemorySegment`, `MemoryAddress`, and `SegmentAllocator`),
    * manipulate and access structured foreign memory (`MemoryLayout`, `VarHandle`),
@@ -42,7 +42,7 @@ In this workshop, you will:
    
    3. Obtain a method handle of the target foreign function, and invoke it
 
-   To perform a downcall, the FFM API needs to know which native function to invoke. This is achieved with a *FunctionDescriptor* which describes the signature of the C function to invoke, i.e. its parameter types and its return type. To model those C types from Java, the FFM API uses different *MemoryLayout* objects.
+   To perform a downcall (Java code calling native code), the FFM API needs to know which native function to invoke. This is achieved with a *FunctionDescriptor* which describes the signature of the C function to invoke, i.e. its parameter types and its return type. To model those C types from Java, the FFM API uses various *MemoryLayout* objects.
 
    The native function will be invoked via a corresponding Method Handle. This Method Handle is created using the corresponding FunctionDescriptor.
    
@@ -62,25 +62,34 @@ Let's now discuss *preview feature* as you will be using the FFM API, a preview 
 
 Java language features and Java SE API features have a lot of exposure, and any mistake in their design can have negative consequences. To avoid such a risk, JEP 12 offers the ability to preview new Java language and Java SE API features.
 
-A *preview feature* is one that is believed to be *fully specified* and *implemented* but may still change before it is included in the Java platform on a final and permanent basis, i.e., it is *non-final*. The received feedback will be evaluated and used to make eventual adjustments *before a feature becomes permanent*.
+A *preview feature* is a feature that is believed to be *fully specified* and *implemented* but may still change before it is included in the Java platform on a final and permanent basis, i.e., it is *non-final*. The received feedback will be evaluated and used to make eventual adjustments *before a feature becomes permanent*.
 
-Important *safeguards prevent developers from using non-final features accidentally*. This is necessary because a nonfinal feature may well be different when it becomes final and permanent in a later Java feature release. Moreover, only final, permanent features are subject to Java's stringent backward-compatibility rules.
+Important *safeguards prevent developers from using non-final features accidentally*. This is necessary because a non-final feature may well be different when it becomes final and permanent in a later Java feature release. Moreover, only final, permanent features are subject to Java's stringent backward-compatibility rules.
 
-Therefore, to avoid unintentional use, preview features are *disabled by default*, and the JDK documentation unequivocally warns you about the nonfinal nature of these features and any of their associated APIs.
+Therefore, to avoid unintentional use, preview features are *disabled by default*, and the JDK documentation unequivocally warns you about the non-final nature of these features and any of their associated APIs.
 
 Preview features are also specific to a given Java SE feature release and require the use of special flags at *compile time* as well as at *runtime*.
 
 
 ```java
 // compile time
-javac --enable-preview --release 19 *.java
+javac --enable-preview --release 19 MyClass.java
 ```
 
 ```java
 // runtime
-java --enable-preview Main
+java --enable-preview MyClass
 ```
-This workshop requires those flags to be set as the FFM API is a preview feature of Java 19. If you don't, you will get an error informing you that you are using preview features and that you need to explicitly enable those.
+This workshop requires those flags to be set as the FFM API is a preview feature of Java 19. If you don't, you will get an error informing you that you are trying to use preview features and that you need to explicitly enable those.
+
+```text
+> javac MyClass.java
+MyClass.java:42: error: ofPlatform() is a preview API and is disabled by default.
+		var pthread = Thread.ofPlatform()
+		                    ^
+  (use --enable-preview to enable preview APIs)
+1 error
+```
 
 💡 Since Java 11 and JEP 330 (Launch Single-File Source-Code Programs), it is possible to compile and run a class in one single command. This is also possible with a class that is using a preview feature.
 
@@ -111,7 +120,7 @@ Such a warning can be disabled with the `--enable-native-access=M` flag on the j
 
 * [JEP 424: Foreign Function & Memory API (Preview)](https://openjdk.org/jeps/424)
 * [Using the Preview Features Available in the JDK](https://dev.java/learn/using-the-preview-features-available-in-the-jdk/)
-* [java.lang.foreign](https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/lang/foreign/package-summary.html) Javadoc **TODO update to GA links**
+* [java.lang.foreign](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/foreign/package-summary.html) javadoc 
 
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
