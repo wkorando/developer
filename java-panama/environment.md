@@ -14,11 +14,7 @@ In this lab, you will:
 
 ## Task 1: Cloud Shell
 
-<<<<<<< HEAD
 To perform this workshop, you will use Java 19 on Oracle Cloud Infrastructure. In theory, you can also do the workshop on your own machine with Java 19 installed but in the interest of time, it is easier to use OCI. 
-=======
-To perform this workshop, you will use Java 19 on Oracle Cloud Infrastructure. In theory, you can also do the workshop on your own machine with Java 19 installed but in the interest of time, it is easier to use OCI.
->>>>>>> f0055b6a6682b788643e0196307ead34dd27bff2
 
 Cloud Shell is a browser-based terminal that provides an ephemeral Linux machine. Cloud Shell simplifies working with cloud resources on OCI. Under the hood, Cloud Shell uses an OCI pre-configured Virtual Machine with preinstalled tools, including Java. And as you will see in this workshop, Cloud Shell can also be used to develop simple applications.
 
@@ -106,14 +102,9 @@ Congratulations, you are now all set for the next step!
 
 * [Cloud Shell](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/cloudshellintro.htm) documentation
 * [Code Editor](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/code_editor_intro.htm) documentation
-* [java.lang.foreign](https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/lang/foreign/package-summary.html) Javadoc **TODO update to GA links**
 
 
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
 * **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
-<<<<<<< HEAD
 * **Last Updated By/Date** - David Delabassée, Sept. 20 2022
-=======
-* **Last Updated By/Date** - Nicolai Parlog, Sep. 17th 2022
->>>>>>> f0055b6a6682b788643e0196307ead34dd27bff2

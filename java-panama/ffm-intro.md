@@ -100,8 +100,6 @@ java --enable-preview --source 19 MyClass.java
 
 ## Task 4: Enable Native Access
 
-**TODO check correcteness of this claim**
-
 The FFM API has been designed with safety in mind, part of it, however, is inherently unsafe. This is fundamentally due to the fact that Java code might invoke an unsafe native method, and obviously, the Java Virtual Machine has no control over what happens on the foreign side. For that reason, the JVM will issue a warning at run time when a native call is invoked.
 
 ```text
@@ -120,9 +118,8 @@ Such a warning can be disabled with the `--enable-native-access=M` flag on the j
 
 * [JEP 424: Foreign Function & Memory API (Preview)](https://openjdk.org/jeps/424)
 * [Using the Preview Features Available in the JDK](https://dev.java/learn/using-the-preview-features-available-in-the-jdk/)
-* [java.lang.foreign](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/foreign/package-summary.html) javadoc 
 
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
 * **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
-* **Last Updated By/Date** - David Delabassée, Sept. 4 2022
+* **Last Updated By/Date** - David Delabassée, Sept. 20 2022

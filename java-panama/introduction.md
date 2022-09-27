@@ -27,7 +27,7 @@ In this workshop, you will learn:
 * how to use the Vector API
 
 
-### Prerequisites (Optional)
+### Prerequisites
 
 This lab assumes you have:
 * some Java skills
@@ -37,9 +37,10 @@ This lab assumes you have:
 ## Learn More
 
 * Panama section on [Inside Java](https://inside.java/tag/panama)
+* [JEP 424: Foreign Function & Memory API (Preview)](https://openjdk.org/jeps/424)
 * [Dev.Java](https://dev.java)
 
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
 * **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
-* **Last Updated By/Date** - David Delabassée, Sept. 2 2022
+* **Last Updated By/Date** - David Delabassée, Sept. 20 2022
