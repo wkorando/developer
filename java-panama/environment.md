@@ -14,7 +14,7 @@ In this lab, you will:
 
 ## Task 1: Cloud Shell
 
-To perform this workshop, you will use Java 19 on Oracle Cloud Infrastructure. In theory, you can also do it the workshop our own machine with Java 19 installed but in the interest of time, it is easier to use OCI. 
+To perform this workshop, you will use Java 19 on Oracle Cloud Infrastructure. In theory, you can also do the workshop on your own machine with Java 19 installed but in the interest of time, it is easier to use OCI. 
 
 Cloud Shell is a browser-based terminal that provides an ephemeral Linux machine. Cloud Shell simplifies working with cloud resources on OCI. Under the hood, Cloud Shell uses an OCI pre-configured Virtual Machine with preinstalled tools, including Java. And as you will see in this workshop, Cloud Shell can also be used to develop simple applications.
 
@@ -92,7 +92,7 @@ You can also re-size, maximize, minimize, swap, close the Cloud Shell and/or the
 
 💡 For the workshop, we suggest keeping both Cloud Shell and Cloud Editor open in the same window, and the workshop guide in a different browser window/tab.
 
-💡 As mentioned earlier Cloud Shell doesn't come yet with Java 19 support. For this workshop, Cloud Editor has been set up to support Java 19.
+💡 As mentioned earlier, Cloud Shell doesn't come yet with Java 19 support. For this workshop, Cloud Editor has been set up to support Java 19.
 
 Congratulations, you are now all set for the next step!
 
@@ -108,4 +108,4 @@ Congratulations, you are now all set for the next step!
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
 * **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
-* **Last Updated By/Date** - David Delabassée, Sept. 2 2022
+* **Last Updated By/Date** - David Delabassée, Sept. 20 2022
