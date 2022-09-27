@@ -1,27 +1,31 @@
 {
-   "workshoptitle": "Exploring Java 19 New Language Features",
+   "workshoptitle": "Exploring New Language Features With Java 19",
    "variables": ["../../variables/variables.json"],
     "help": "java_devrel_grp@oracle.com",
     "tutorials": [
         {
             "title": "Introduction",
-            "filename": "../../introduction.md"
+            "filename": "../../lab-0-introduction.md"
         },
         {
-            "title": "Lab 1: Amber1 ",
-            "filename": "../../lab1.md"
+            "title": "Your workshop environment",
+            "filename": "../../lab-1-environment.md"
         },
         {
-            "title": "Lab 2: Amber2",
-            "filename": "../../lab2.md"
+            "title": "Records, First Steps",
+            "filename": "../../lab-records-1-intro.md"
         },
         {
-            "title": "Lab 3: Amber3",
-            "filename": "../../lab3.md"
+            "title": "Records, Customizing Construction",
+            "filename": "../../lab-records-2-construction.md"
         },
         {
-            "title": "Lab 4: Amber4",
-            "filename": "../../lab4.md"
+            "title": "Records, More Customization",
+            "filename": "../../lab-records-3-customization.md"
+        },
+        {
+            "title": "Text Blocks",
+            "filename": "../../lab-text-blocks.md"
         }
     ]
 }
