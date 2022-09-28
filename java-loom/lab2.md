@@ -3,93 +3,143 @@
 ## Introduction
 
 
-This lab introduces you to Structured Concurrency, its programming model and its API.
+This lab introduces you to Structured Concurrency, its programming model, and its API.
 
 Estimated Time: 35 minutes
-
-### About <Product/Technology> (Optional)
-Enter background information here about the technology/feature or product used in this lab - no need to repeat what you covered in the introduction. Keep this section fairly concise. If you find yourself needing more than to sections/paragraphs, please utilize the "Learn More" section.
 
 ### Objectives
 
 *List objectives for this lab using the format below*
 
 In this lab, you will:
-* Objective 1
-* Objective 2
-* Objective 3
+* Understand scope
+* Handle tasks in scope
 
-### Prerequisites (Optional)
+### Prerequisites
 
-*List the prerequisites for this lab using the format below. Fill in whatever knowledge, accounts, etc. is needed to complete the lab. Do NOT list each previous lab as a prerequisite.*
+If you haven't already clone the repository: 
 
-This lab assumes you have:
-* An Oracle Cloud account
-* All previous labs successfully completed
+Move to the `org.paumard.loom.structuredconcurrency` package, which contains the code for completing this lab. 
+
+Structured Concurrency is an incubator feature in JDK 19. You will need to add this module at compile and run time explicitly. The below commands demonstrate how this is done:
+
+```shell
+javac --enable-preview --release 19 --add-modules jdk.incubator.concurrent Main.java
+```
+
+You can run this `Main` class with the following command:
+
+```shell
+java --enable-preview --add-modules jdk.incubator.concurrent Main
+```
 
 
-*This is the "fold" - below items are collapsed by default*
+#### Getting the Solutions
 
-## Task 1: Concise Step Description
+If you get stuck at some point, you can still check the solutions of the exercises in the `solutions/java` folder. You can even declare this folder as a source folder in your IDE to load these classes, check them, and execute them. 
 
-(optional) Step 1 opening paragraph.
+The solutions should be seen as "possible solutions". There may be other ways to solve these exercises. 
 
-1. Sub step 1
+## Task 1: Version Check
 
-	![Image alt text](images/sample1.png)
+Open `A_VersionCheck`.
 
-	> **Note:** Use this format for notes, hints, tips. Only use one "Note" at a time in a step.
+This first class is just there to ensure that you run the correct Java version. Also, make sure that you have enabled preview features. You need to run this class.
 
-2. Sub step 2
+## Task 2: First Scope
 
-  ![Image alt text](images/sample1.png)
+Open `B_FirstScope`. 
 
-4. Example with inline navigation icon ![Image alt text](images/sample2.png) click **Navigation**.
+Let us first explore the `StructuredTaskScope` class. This class is your main entry point for structured concurrency with Loom. Go ahead and visit the `Weather` record, and follow the instructions to implement the `readWeather()` method.
 
-5. Example with bold **text**.
+1. First, create an instance of the `StructuredTaskScope` class. This class implements `AutoCloseable`, so you should create it in a
+_try-with-resources_ pattern. Because this scope will produce a `Weather` object, you should create an instance of `StructuredTaskScope<Weather>`. There is no trick here: this class has an empty constructor that you can call.
 
-   If you add another paragraph, add 3 spaces before the line.
+2. Second, create and submit a task to this scope. This task is an instance of `Callable<Weather>`, because your scope is parameterized by `Weather`. You can create this `Callable` by simply calling `readWeatherFromA()`. It will produce a (not so) random `Weather` instance after a little (random) delay. Submitting a task to a scope is done by calling its `fork()` method. It gives you a future object that you can put in a variable.
 
-## Task 2: Concise Step Description
+3. Third, once you have submitted tasks to your scope, you should call its `join()` method. This call is blocking: `join()` will return when all your tasks have been completed. Not calling `join()` will make your code fail with an exception when you call `get()` on your future objects. You can experiment with that in this lab. 
 
-1. Sub step 1 - tables sample
+4. Fourth and last point: you can get the result of your future by calling its classical `get()` method, or even better, its new `resultNow()` method. This last method should be called only if you know that your future is complete, which is the case after you called `scope.join()`.
 
-  Use tables sparingly:
+Once you complete this, you can run this `B_FirstScope` class. Do not forget to add the following options to run this main method: `--enable-preview --add-modules jdk.incubator.concurrent`. 
 
-  | Column 1 | Column 2 | Column 3 |
-  | --- | --- | --- |
-  | 1 | Some text or a link | More text  |
-  | 2 |Some text or a link | More text |
-  | 3 | Some text or a link | More text |
+Every time you submit a callable to a structured task scope, it creates a virtual thread and uses it to execute this callable. Because it is cheap to create and block virtual threads, there is no need to pool them. Even if a structured task scope looks like an executor service, it works differently. An executor service pools platform threads; a structured task scope creates them on demand and lets them die when they are not needed.
 
-2. You can also include bulleted lists - make sure to indent 4 spaces:
+## Task 3: Shutdown on Success Scope
 
-    - List item 1
-    - List item 2
+Open `C_ShutdownOnSuccess`.
 
-3. Code examples
+At this point, you should have a working `Weather.readWeather()` method that queries one (fake) weather forecast server. 
 
-    ```
-    Adding code examples
-  	Indentation is important for the code example to appear inside the step
-    Multiple lines of code
-  	<copy>Enclose the text you want to copy in <copy></copy>.</copy>
-    ```
+You want to query more than one server, and because all results are equivalent (weather forecast should always be the same), you would like to get the first result and interrupt the other requests. Fortunately, there is a special scope to do that: the `StructuredTaskScope.ShutdownOnSuccess`. 
 
-4. Code examples that include variables
+1. Modify the code you wrote in the previous section, and create an instance of this scope instead of the previous `StructuredTaskScope`. In this case, the `ShutdownOnSuccess` class takes a parameter, `Weather`.
+2. Submit more than one query by calling `fork()` on your scope object and putting the returned future in a variable. You have more methods for that: `readWeatherFromB()`, `readWeatherFromC()`, `readWeatherFromD()`, etc... They have been written so that they will provide a `Weather` instance with a random delay.
+3. Do not forget to call `scope.join()`; this is still mandatory.
+4. Then you can call `scope.result()`, which returns the first `Weather` instance it gets. Moreover, all the other callables you have submitted have been canceled, and the corresponding virtual threads have been interrupted. You can check that by printing the state of all the futures on the console. To do that, the `Future` interface has a new method: `state()`. Note that it may happen that a future was not canceled because the scope did not have the time to interrupt the corresponding thread. 
+5. Once you observe how these futures have been canceled, you can remove them from your code; you will no longer need them. 
 
-	```
-  <copy>ssh -i <ssh-key-file></copy>
-  ```
+## Task 4: Extending Scope
+
+Open `D_ExtendingScope`.
+
+Extending a scope can be done to implement your own behavior. In this exercise, you will be querying several quotation servers, each giving you its price for a given journey. What you want is the lowest price. So you need to wait for all the answers from these servers and get the best quotation. 
+
+1. Add some code in the `Quotation` record. This code should query some (fake) quotation servers using the same pattern you used to query the weather servers and a regular `StructuredTaskScope<Quotation>`.  Store each future in a variable. 
+2. After your call `scope.join()`, add some code to get the best quotation, the one with the least price. You can use a Stream pattern to find this quotation or a for  loop. The code you have written is working and is getting the best quote. 
+
+Let's extend the `StructuredTaskScope` class to implement this business logic (the computation of the best quotation from all the available quotations) with this class. 
+
+3. Create a `QuotationScope` class that extends `StructuredTaskScope<Weather>`, and modify your `readQuotation()` method so that it forks its task using this scope rather than the plain `StructuredTaskScope<Weather>`. You can create it as a local class of the `Quotation` record.
+4. Every time a task completes, Loom calls a callback method, `handleComplete()`, with the corresponding completed future. You can now override this method. The behavior of this method depends on the state of the future it processes. The state may have four values; you can create a switch to handle them.
+- `RUNNING`: this case should never happen. The future passed to this method should not be in that state. 
+- `SUCCESS`: you can save the quotation in a collection for future use. Let us call it `quotations` for future reference. 
+- `FAILED`: something went wrong, no quotation could be got, and an exception has been thrown. You can save it in a collection for future use. Let us call it `exceptions`.
+- `CANCELLED`: the task has been canceled or interrupted. In that case, no result and no exception has been produced. 
+
+Be careful that the `handleComplete()` method is called in the virtual thread that executed your task. This method should be thread-safe, as well as the collections receiving the quotations and the exceptions. 
+
+Once all the tasks you submitted are complete, your call to `join()` returns. At this point, the two collections you created: one for the quotations and the other for the exceptions, contain the results of your queries. You can now analyze them. 
+
+5. Create a `bestQuotation()` method that analyzes the quotations you put in your collection and returns the one with the least price. 
+6. Create an `exceptions()` method that takes all the exceptions you put in the other collection and add them as suppressed exceptions to a single exception. For instance, you can create a special class to do that, `QuotationException`.
+7. You may wonder what would happen if your `quotations` collection is empty. In that case, you may have exceptions in your `exceptions` collection. So maybe you can design your `bestQuotation()` method to ensure it would fail with the right exception. 
+
+Just some quick notes about the class you just wrote. First, it encapsulates your business logic. How do you need to aggregate your business data (in this example, the quotations)? The aggregation logic is written in the `bestQuotation()` method, so it's easy to review. Second, it processes one future at a time, so reviewing the code is simple: it's all in one place. 
+
+Writing unit tests for this class is also easy. Because all your code is synchronous, you can easily create completed futures to call your `handleComplete()` method and check that it is doing the right thing. And the same goes for the `bestQuotation()` method. It is also a synchronous method that is very easy to unit test. 
+
+## Task 5: Building Travel Page
+
+Open `E_BuildingTravelPage`.
+
+Now that you have a quotation and weather service, what about building a travel page? The `TravelPage` record is there for that: it has a `quotation` component and a `weather` component. 
+
+Before building your travel page, let us think about these two components. 
+- The quotation component is critical: if you do not have a quotation, you cannot sell anything to your customer.
+- The weather component, on the other hand, is nice to have, but if you do not have it, you can still sell something. Moreover, because of that, you do not want the weather to take too long to get and see your customer go away. 
+
+1. The first thing you need to implement is a timeout on the weather. If something goes wrong, and you get an exception or getting the weather takes too long, you want to give a default value instead of making your whole process fail. The `StructuredTaskScope` class has just the right method for that: `joinUntil()`. If you want to set up a 100ms timeout, then you can pass `Instant.now().plusMillis(100)` to this `joinUntil()` method call. You will then have to handle a `TimeoutException` that you can use to return your default value for the weather.
+2. Now you can create a `readTravelPage()` factory method in the `TravelPage` record, following what you did for `Weather` and `Quotation`. This method can create a scope and submit two callables to it: one to read the weather and the other to read the quotation. You can create your own `TravelPageScope` by extending `StructuredTaskScope`. To do that, you need to find a type parameter for this scope that is a super type to all the objects this scope has to handle: `Weather` and `Quotation`. So far, this type is `Object`. What about you create an interface, `PageComponent`, and make `Weather` and `Quotation` implement it? Then `TravelPageScope` can extend `StructuredTaskScope<PageComponent>`. 
+3. You can handle the weather and the quotation with futures in the `readTravelPage()` method. This will work but will make it hard to unit test. If you decide to override the `handleComplete()` method, your business logic is written in its method that you can easily test. 
+4. Here are some hints to override `handleComplete()`.
+
+   1. You get a `Future<PageCompoment>` that can carry a value or an exception. So there are two things you need to do: check the state of this future and the type of value it carries. Checking the state first is your best choice. 
+   2. You can follow what you did for the `QuotationScope` class and handle the `RUNNING` and `CANCELLED` cases in the same way.
+   3. Handling the `SUCCESS` case is interesting. You need to check if the produced value is a `Weather` or a `Quotation`. You can do that with a switch on types, another preview feature of the JDK 19. Because you are working with Loom, preview features are already enabled, so you can use the switch on type without further configuration. You can even go one step further and seal the `PageComponent` interface, only permitting `Weather` and `Quotation` to implement. Your switch is now exhaustive without having to add a default case. You can now save the produced quotation and weather as instance fields of this scope. Make sure that they are volatile because they need to be visible. 
+   4. Handling the `FAILURE` case can be done similarly. You may need to check if the exception is an instance of `Quotation.QuotationException`, handle it specifically, and catch all the other exceptions. 
+
+
+## Wrapping up
+
+You should now have two different extensions of the `StructuredTaskScope` class and a good understanding of how to use this class and extend it to precisely fit your business need. You should be able to very easily write unit tests for all the steps of your asynchronous processing because all these steps are written in one method.
 
 ## Learn More
 
-*(optional - include links to docs, white papers, blogs, etc)*
 
-* [URL text 1](http://docs.oracle.com)
-* [URL text 2](http://docs.oracle.com)
+* [Structured Concurrency - JEP 428](https://openjdk.org/jeps/428)
 
 ## Acknowledgements
-* **Author** - <Name, Title, Group>
-* **Contributors** -  <Name, Group> -- optional
-* **Last Updated By/Date** - <Name, Month Year>
+* **Author** - José Paumard, Java Developer Advocate, Java Platform Group
+* **Contributors** -  Billy Korando, Java Developer Advocate, Java Platform Group
+* **Last Updated By/Date** - Billy Korando, September 2022
