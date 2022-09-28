@@ -22,7 +22,7 @@ As mentioned before, a record generates the following methods:
 * `hashCode()` that uses all fields
 * `toString()` that uses all fields
 
-All of these methods can be reimplemented in code to change their behavior.
+All of these methods can be overridden in code to change their behavior.
 This is not typically advisable for accessors because records should be _transparent_ carriers of (immutable) data, which means the accessor should return the field's value as-is.
 A possible exception is a record that has a mutable collection as field (which is in itself questionable because, ideally, a record is _immutable_) but wants to return an unmodifiable view on it.
 
@@ -119,7 +119,7 @@ This is fulfilled because `Node` is a record, which are always implicitly final.
 Aside from a few restrictions, like limited inheritance, a record works just like a class and so it is possible to add methods.
 As a rule of thumb, it's usually a good idea to limit them to their own fields or those of other instances of the record, but that's "just" a design concern.
 
-💪 As an exercise, create a method that clears the list of children.
+💪 Let's create a method that clears the list of children.
 
 Your solution might look as follows:
 
@@ -137,7 +137,7 @@ public void removeChildren() {
 Just like all enums implicitly inherit from `java.lang.Enum`, all records implicitly inherit from `java.lang.Record`
 Records can hence not extend other classes but they can implement interfaces just like classes do.
 
-💪 As an exercise, extend the `Node` record to implement `Comparable<Node>`, so that nodes are compared by their `id`.
+💪 Finally, extend the `Node` record to implement `Comparable<Node>`, so that nodes are compared by their `id`.
 
 Your solution should look something like this:
 
