@@ -16,7 +16,7 @@ In this lab, you will:
 
 ## Task 1: Immutable Data Classes
 
-Classes are often created to define behavior (like services) or mutable data structures (like lists). Still, they often encode data (like a point with two coordinates) and immutable data.
+Classes are usually created to define behavior (like services) or mutable data structures (like lists), but often they just encode data (like a point with two coordinates) and frequently immutable data at that.
 The Java language gives you several ways to create an immutable class.
 Probably the most straightforward way is to create a final class with final fields and a constructor to initialize these fields.
 Here is an example of such a class:
@@ -45,7 +45,7 @@ Neither the compiler, nor the runtime, nor your colleagues can see that intentio
 
 ## Task 2: Records As Transparent Carriers Of Immutable Data
 
-Records are here to help you make previous code much simpler.
+Records are here to help you make the previous code much simpler.
 Starting with Java SE 14, you can write the following:
 
 ```java
@@ -79,7 +79,7 @@ public record Point(int x, int y) { }
 </copy>
 ```
 
-To experiment with it, create a second file `Main.java`, with a `main` method and add some `Point` instances.
+To experiment with it, create a second file `Main.java`, with a `main` method and construct some `Point` instances.
 For example, you could print an instance to see the default `toString()` implementation in action or create two points with the same coordinates and observe that they are `equal`:
 
 ```java
