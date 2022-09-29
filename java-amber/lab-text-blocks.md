@@ -79,6 +79,7 @@ Now turn to the closing `"""`.
 As it is, the printed output looks as follows:
 
 ```html
+<copy>
 ---
 <html>
 	<body>
@@ -86,6 +87,7 @@ As it is, the printed output looks as follows:
 	</body>
 </html>
 ---
+</copy>
 ```
 
 💪 Move the closing `"""` to the last line of the string: `</html>""";`
@@ -93,11 +95,13 @@ The output now looks differently:
 
 ```html
 ---
+<copy>
 <html>
 	<body>
 		<p>Hello, world</p>
 	</body>
 </html>---
+</copy>
 ```
 
 As you can see, the position of the closing `"""` decides whether the string ends with a newline or not.
@@ -114,6 +118,7 @@ If it's on its own line, then it's indentation is considered to be incidental an
 The following snippet indicates the distinction with a `|`:
 
 ```java
+<copy>
 public class TextBlocks {
 
     public static void main(String[] args) {
@@ -130,6 +135,7 @@ public class TextBlocks {
     }
 
 }
+</copy>
 ```
 
 💪 Try that out by going back to the HTML snippet in `TextBlocks` and moving the closing `"""` (on their own line) to the left and right be deleting and adding white space.
