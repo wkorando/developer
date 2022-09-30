@@ -115,7 +115,87 @@ WARNING: java.lang.foreign.Linker::nativeLinker has been called by module org.op
 WARNING: Use --enable-native-access=org.openjdk.jextract to avoid a warning for this module
 ```
 
-## Task 3: Using jextract
+
+## Task 3: Hello World
+
+Before discussing jextract, let's start with a simple Java application making a downcall to a C Hello World function.
+
+1. Create the foregin code.
+
+Create a file named "helloworld.c" with the following content.
+
+```
+<copy>
+#include <stdio.h>
+#include "helloworld.h"
+
+void helloworld(void) {
+    printf("Hello World from C!\n");
+}
+</copy>
+```
+
+Create the corresponding "helloworld.h" header.
+
+```
+<copy>
+#ifndef helloworld_h
+#define helloworld_h
+
+extern void helloworld(void);
+
+#endif
+</copy>
+```
+
+
+You can now compile the native Hello World function into a shared object.
+
+```text
+<copy>
+ gcc -fPIC -shared -o libhelloworld.so helloworld.c
+</copy>
+```
+
+
+2. Use jextract
+
+Use jextract to generate the binding exposing the native function.
+
+
+```text
+<copy>
+jextract -t org.hello -lhelloworld helloworld.h
+</copy>
+```
+
+3. Write the Java application
+
+Create a simple Java application named "HelloWorld.java".
+
+```
+<copy>
+import static org.hello.helloworld_h.*;
+
+public class HelloWorld {
+    public static void main(String[] args) {
+        helloworld();
+    }
+}
+</copy>```
+
+Compile and run it.
+
+```text
+<copy>
+java --enable-native-access=ALL-UNNAMED --enable-preview --source=19 -Djava.library.path=$PWD HelloWorld.java
+</copy>
+```
+
+As you can see, it is easy to invoke this simple C function from the Java application as jextract is handling all the infrastructure code.
+
+
+## Task 4: Using jextract
 
 To get some help, use the `-?` flag with `jextract`.
 
@@ -208,7 +288,7 @@ There are a few things to keep in mind:
 * jextract will create a public class for every `struct` and `typedef` referenced in a header file.
 
 
-## Task 4: Jextract advanced usage
+## Task 5: Jextract advanced usage
 
 
 As you saw in the previous section, jextract can potentially generate a lot of Java source files for a given header file. Not all of those files are required to execute one specific C function. To see what exactly jextract will generate for a given header file, you can use the `--dump-includes` flag and specify a file path. This dump file will list all native symbols jextract can potentially extract from the specified header file.
@@ -221,7 +301,7 @@ As you saw in the previous section, jextract can potentially generate a lot of J
 For instance, the following command will create a `stdio-dump.txt` file containing all native symbols jextract is capable of extracting from the `/usr/include/stdio.h` header:
 
 ```text
-> <copy>jextract --source -t com.clang.stdlib.stdio -I /usr/include --dump-includes stdio-dump.txt /usr/include/stdio.h</copy>
+> <copy>jextract --source -t clang.stdlib.stdio -I /usr/include --dump-includes stdio-dump.txt /usr/include/stdio.h</copy>
 ```
 💡 Make sure that the directory specifed in the `--dump-includes` path exists!
 
@@ -294,7 +374,7 @@ You can now use this file when invoking jextract to only generate the selected c
 💡 There is only so much a tool can do. It remains essential to understand what you are filtering. For example, there may be dependencies between components of a header file. Excluding a required dependency may lead to issues when using another component relying on that dependency.
 
 
-## Task 5: Using the generated classes
+## Task 6: Using the generated classes
 
 Now that you understand how jextract can help to generate the infrastructure code of foreign function(s), let's revisit the initial downcall with the C `atoi` function from the `stdlib` library.
 
@@ -362,15 +442,10 @@ And that's it! As you can see, the code to invoke the foreign `atoi` function is
 You can now compare this code to the code you had to write in the "A Simple Downcall" lab.
 
 
-----
-
-line 1: puts invocation with a pointer to memory segment holding Java string allocated using memory session (like C malloc)
-line 2: allocating native arena which size matches to the size of a memory segment that can hold Java string with null-terminating char.
-line 3: puts invocation with a pointer to memory segment holding Java string allocated within the native arena
 
 ## Conclusion
 
-In this lab, you have used jextract, a tool that generates the infrastructure code required for using foreign functions. Jextract helps developers as they can focus solely focus on writing the logic that will rely on this generated code to invoke foreign functions. An additional benefit of jextract is that the generated code will always be optimized to take benefits of various underlying optimizations (ex. JIT compiler and HotSpot optimizations), another important aspect that developers won't have to worry about!
+In this lab, you have used jextract, a tool that generates the infrastructure code required for using foreign functions. Jextract helps developers as they can focus on writing the logic that will rely on this generated code to invoke foreign functions. An additional benefit of jextract is that the generated code will always be optimized to take benefits of various underlying optimizations (ex. JIT compiler and HotSpot optimizations), another important aspect that developers won't have to worry about!
 
 
 ## Learn More

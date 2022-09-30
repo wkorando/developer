@@ -9,7 +9,7 @@ Estimated Time: ~10 minutes
 ### **Objectives**
 
 In this lab, you will:
-* Discover OCI Cloud Shell and Cloud Editor.
+* Discover the OCI Cloud Shell and the OCI Cloud Editor.
 * Do some minimal setup to prepare your environment.
 
 ## Task 1: Cloud Shell
@@ -28,6 +28,8 @@ After 20~30 seconds, your Cloud Shell VM will be up and running, and your Cloud 
   ![Cloud Shell started](../images/cs-started.png)
 
 You now can use Cloud Shell as a regular shell.
+
+
 
 ## Task 2: Prepare your environment
 
@@ -54,33 +56,18 @@ This script downloads and untars Java 19, and configures the JAVA_HOME environme
 <copy>java -version</copy>
 ```
 
-And last but not least, you should build the artifacts required for the workshop.
-
-```text
-<copy>cd ~
-./scripts/generate_stdlib_partial.sh stdio
-./scripts/generate_stdlib_partial.sh dirent
-mvn clean package
-</copy>
-```
-
-⚠️ TODO
-- git clone, install java19 + Java-home
-- setup-ce !!! this script need to change bascrc to set JAVA_HOME and avoid csruntime issue!!
-
-
-
 ## Task 3: Cloud Editor
 
 
 During the workshop, you will also also use Cloud Editor, a Cloud Shell feature that offers a browser-based modern text editor.
 
+💡 `vi`, `vim`, `emacs` and `nano` are also pre-installed on the Cloud Shell VM.
+
 To launch Cloud Editor, simply click, in the [OCI console](https://cloud.oracle.com), on the Cloud Editor icon on the top right, next to the Cloud Shell icon.
 
   ![Starting Cloud Editor](../images/ce-start.png)
 
-💡 Cloud Editor runs in the Cloud Shell VM but you don't have to start Cloud Shell to use Cloud Editor. If you don't, the Cloud Shell VM will automatically be started when Cloud Editor is launched.
-
+Cloud Editor runs in the Cloud Shell VM but you don't have to start Cloud Shell to use Cloud Editor. If you don't, the Cloud Shell VM will automatically be started when Cloud Editor is launched.
 
   ![Cloud Editor default layout](../images/cs-ce-horizontal.png)
 
@@ -88,14 +75,32 @@ By default, Cloud Shell and Cloud Editor use a stacked layout. You can adjust th
 
   ![Cloud Editor default layout](../images/cs-ce-view.png)
 
-You can also re-size, maximize, minimize, swap, close the Cloud Shell and/or the Cloud Editor window, change fonts (check the "Gear" icon). You can also open Cloud Shell and Cloud Editor in different browser windows/tabs, etc. We suggest spending 1 or 2 minutes getting familiar with both Cloud Shell and Cloud Editor.
+You can also re-size, maximize, minimize, swap, close the Cloud Shell and/or the Cloud Editor window, and change fonts (check the "Gear" icon). You can also open Cloud Shell and Cloud Editor in different browser windows/tabs, etc. We suggest you spend 2 minutes getting familiar with both Cloud Shell and Cloud Editor.
 
 💡 For the workshop, we suggest keeping both Cloud Shell and Cloud Editor open in the same window, and the workshop guide in a different browser window/tab.
 
-💡 As mentioned earlier, Cloud Shell doesn't come yet with Java 19 support. For this workshop, Cloud Editor has been set up to support Java 19.
+
+## Task 4: Lab directories
+
+This is not mandatory but it is probably cleaner to perform each Lab in its own directory. So we suggest to create, for each lab, the corresponding directory.
+
+```text
+mkdir ~/lab3
+cd ~/lab3
+…
+```
+
+Should you want to get at the end of this workshop a copy of the files you created, just use the Cloud Shell File Transfer feature to exchange files between your laptop and a Cloud Shell VM.
+
+  ![Cloud Shell started](../images/cs-file-transfer.png)
+
+
+
+## Remark
+
+In the interest of time and in the spirit of explaining how things work, the samples you will develop in these hands-on labs sometimes take a few shortcuts. For example, potential errors are not always handled properly, arguments are not always validated, etc. Those and other aspects such as security, synchronization, testing, etc. are important matters that should always be properly handled in any code that will go into production but that is not the focus of this lab. Today's goal is to give you, in a short amount of time, an overview of Project Panama and offer you some initial hands-on experiences with the Panama APIs and its tool.
 
 Congratulations, you are now all set for the next step!
-
 
 ## Learn More
 

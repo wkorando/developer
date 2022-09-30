@@ -20,25 +20,21 @@
             "filename": "../../simple-downcall.md"
         },
         {
-            "title": "Lab 4: Downcalls in more details",
-            "filename": "../../downcall-more-details.md"
-        },
-        {
-            "title": "Lab 5: Upcalls",
+            "title": "Lab 4: Upcalls",
             "filename": "../../upcall.md"
         },
         {
-            "title": "Lab 6: Using jextract",
+            "title": "Lab 5: Using jextract",
             "filename": "../../jextract.md"
         },
         {
-            "title": "Lab 7: Vector API introduction",
+            "title": "Lab 6: Vector API introduction",
             "filename": "../../vector-api-intro.md"
         },
         {
-            "title": "Lab 8 (optional): TBD Native Variadic Functions",
-            "description": "optional lab",
-            "filename": "../../optional.md"
+            "title": "Conclusion",
+            "description": "",
+            "filename": "../../conclusion.md"
         }
     ]
 }

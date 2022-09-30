@@ -3,7 +3,9 @@
 ## Introduction
 
 
-This lab introduces you to upcalls, i.e. a call from native code back to Java code. More specifically, it enables you to pass Java code as a function pointer to a foreign function.
+This lab introduces you to upcalls, i.e. a call from native code back to Java code. More specifically, it enables you to pass Java code as a function pointer to a foreign function. 
+
+💡 The "upcall" name is used to denote a lower-level language (ex. C) invoking a higher-level language (ex. Java).
 
 
 Estimated Time: 15 minutes
@@ -65,9 +67,9 @@ Note that `printfPtr` has a variadic arguments definition as denoted by the `...
 
 ## Task 2: Invoking a Java method from a C function
 
-1. Create a callback C function
+1. Create a C function
 
-This simple function (`callback_function`) will accept a pointer to another function that doesn't return something, i.e. `void()`: `*ptrToFunction()`
+This simple `callback_function` function will accept a pointer to another function that doesn't return something, i.e. `void()`: `*ptrToFunction()`. Later in this section, we will see how this function can invoke some Java code, how it can make an upcall.
 
 Create a C source file named `upcall.c` with the following content.
 
@@ -91,7 +93,7 @@ Create a C source file named `upcall.c` with the following content.
 💡 The C [`puts`](https://cplusplus.com/reference/cstdio/puts/) function accepts a pointer to a string and displays this string on the standard output. It is more or less the equivalent of the Java `println` method. 
 
 
-2. Create a shared library
+2. Compile the native code
 
 Compile your C code using `gcc`.
 
@@ -99,7 +101,7 @@ Compile your C code using `gcc`.
 > <copy>gcc -fPIC -shared -o ~/mylib.so upcall.c</copy>
 ```
 
-This will generate a shared library that hosts the C `callback_function` function that accepts, as parameter, a pointer pointing to a function with the `void()` signature.
+This will generate a shared library that hosts the C `callback_function` function.
 
 ```text 
 > <copy>file mylib.so</copy>
@@ -109,7 +111,9 @@ mylib.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically li
 
 3. Create the Java application
 
-Create an Upcall.java application with a simple `callback()` method.
+You will now create a Java application that will use the FFM API to make a downcall to the C foreign function. During this downcall, the invoking Java method will pass a pointer pointing to another Java method to the callee. The C foreign function will use this pointer to invoke the corresponding Java method via an upcall. 
+
+Create an `Upcall.java` application class with 2 simples methods : `callback()` and `main()`. The `callback()` method is the method we want to invoke from the C code.
 
 ```java
       <copy>
@@ -119,26 +123,50 @@ Create an Upcall.java application with a simple `callback()` method.
               System.out.println("Java\t callback() method");
           }
 
-          public static void main(String[] args) throws Throwable {
+          public static void main(String[] args) {
 
-          System.out.println("Java\t main() method");
+              System.out.println("Java\t main() method");
 
-          System.out.println("Java\t main() method exit");
+              System.out.println("Java\t main() method exit");
 
           }
 
       }</copy>
 ```
 
+4. Setup the Linker
 
-3. Setup the Java callback
+
+```java
+      …
+      public class Upcall {
+      …
+      <copy>
+      static final Linker linker = Linker.nativeLinker();
+
+      private static final SymbolLookup
+          linkerLookup = linker.defaultLookup();
+
+      private static final SymbolLookup
+          systemLookup = SymbolLookup.loaderLookup();
+
+      private static final SymbolLookup
+          symbolLookup = name ->
+             systemLookup.lookup(name)
+                         .or(() -> linkerLookup.lookup(name));
+      </copy>
+      …
+```
+
+
+5. Setup the infrastructure for the Java callback
 
 Define a method handle for the `void callback()` method.
 
 ```java
       …
       public class Upcall {
-
+      …
       <copy>
       private static final MethodHandle callbackHandle;
 
@@ -163,41 +191,10 @@ Define a method handle for the `void callback()` method.
 …
 ```
 
-** Function Descriptor **
-
-```java
-      …
-      <copy>
-      static final FunctionDescriptor callbackDescriptor = FunctionDescriptor.ofVoid();
-  </copy>
-```
-
-4. Setup the Linker
 
 
-```java
-      …
-      public class Task {
-      …
-      <copy>
-      static final Linker linker = Linker.nativeLinker();
 
-      private static final SymbolLookup
-          linkerLookup = linker.defaultLookup();
-
-      private static final SymbolLookup
-          systemLookup = SymbolLookup.loaderLookup();
-
-      private static final SymbolLookup
-          symbolLookup = name ->
-             systemLookup.lookup(name)
-                         .or(() -> linkerLookup.lookup(name));
-      </copy>
-      …
-```
-
-
-5. Create...
+5. Create the Method Handle
 
 
 ```java
@@ -212,13 +209,20 @@ Define a method handle for the `void callback()` method.
       …
 ```
 
-6. Invoke the 
+Add its correspdonding Function Descriptor.
+
+```java
+      …
+      <copy>
+      static final FunctionDescriptor callbackDescriptor = FunctionDescriptor.ofVoid();
+  </copy>
+```
 
 
-💡 A **stub** is a consumer proxy object which is communicating with a `foreign` provider.
+6. Invoke the Foreign Function
 
+To invoke a foregin function, you need to create an upcall stub. A **stub** is a proxy object which is communicating with a `foreign` provider, with a foregin function. Update the main() method as follow.
 
-To invoke the callback via its method handle, update the main() method as follow.
 
 ```java
       System.out.println("Java\t main() method");
@@ -228,14 +232,11 @@ To invoke the callback via its method handle, update the main() method as follow
       var callbackNativeSymbolSegment = linker.upcallStub(
                   callbackHandle, callbackDescriptor, ms);
 
-       nativeFunctionWithCallback.invokeExact((Addressable) callbackNativeSymbolSegment);
+      nativeFunctionWithCallback.invokeExact((Addressable) callbackNativeSymbolSegment);
       </copy>
 
       System.out.println("Java\t main() method exit");
 ```
-
-java -Dlib.path=$PWD/lib.platform --enable-native-access=ALL-UNNAMED --enable-preview --source 19 Upcall.java
-
 
 7. Test the upcall
 
@@ -263,7 +264,7 @@ You can now compile and run the code.
       </copy>
 ````
 
-You will then see the invocation chain, i.e. from Java to C (downcall), C to Java (upcall), and then back to Java.
+You should see the invocation chain, i.e. from Java to C (downcall), C to Java (upcall), and then back to Java.
 
 ```text
 Java     main() method
@@ -278,13 +279,6 @@ Java     main() method exit
 
 💡 In the spirit of showing how things work, those examples sometimes take a few shortcuts. For example, potential errores aren't always handled properly, arguments are not validated, etc. Those and other aspects such as security, synchronization, etc. are matters that should always be properly handled in any code that will go into production but that is not the focus of this lab.
 
-
-## Learn More
-
-*(optional - include links to docs, white papers, blogs, etc)*
-
-* [URL text 1](http://docs.oracle.com)
-* [URL text 2](http://docs.oracle.com)
 
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
