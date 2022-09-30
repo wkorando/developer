@@ -17,7 +17,7 @@ And it is working on more features, some of them in preview in Java 19:
 * pattern matching in `switch`
 * record patterns
 
-The goal of this workshop is to introduce you to the new language features that Project Amber introduced and is previewing.
+This workshop will present you with the new language features that Project Amber introduced and is previewing.
 
 Estimated Workshop Time: ~90 minutes
 

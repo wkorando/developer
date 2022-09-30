@@ -10,13 +10,13 @@ Estimated Time: ~15 minutes
 
 In this lab, you will:
 
-* learn what records ar all about
-* create a first simple record
+* learn what records represent
+* create a simple record
 * observe the features it comes with
 
 ## Task 1: Immutable Data Classes
 
-Classes are often created to define behavior (like services) or mutable data structures (like lists), but just as often they just encode data (like a point with two coordinates) and often immutable data.
+Classes are usually created to define behavior (like services) or mutable data structures (like lists), but often they just encode data (like a point with two coordinates) and frequently immutable data at that.
 The Java language gives you several ways to create an immutable class.
 Probably the most straightforward way is to create a final class with final fields and a constructor to initialize these fields.
 Here is an example of such a class:
@@ -45,7 +45,7 @@ Neither the compiler, nor the runtime, nor your colleagues can see that intentio
 
 ## Task 2: Records As Transparent Carriers Of Immutable Data
 
-Records are here to help you make this code much simpler.
+Records are here to help you make the previous code much simpler.
 Starting with Java SE 14, you can write the following:
 
 ```java
@@ -65,7 +65,7 @@ This single line of code creates the following elements for you:
 As we will see later, you can modify much of this by adding your own implementations.
 
 Records are making the creation of immutable aggregates of data much simpler, without the help of any IDE.
-It reduces the risk of bugs because every time you modify the components of a record, the compiler automatically updates everything mentioned above, like adding it to `equals` and `hashCode` or removing an accessor.
+They reduce the risk of bugs because every time you modify the components of a record, the compiler automatically updates everything mentioned above, like adding it to `equals` and `hashCode` or removing an accessor.
 
 Most importantly, a record clearly communicates to compiler, runtime, and coworkers that this type does not need encapsulation and acts as a transparent carrier for immutable data.
 
@@ -79,8 +79,8 @@ public record Point(int x, int y) { }
 </copy>
 ```
 
-To experiment with it, create a second file `Main.java` with a `main` method and create some `Point` instances.
-You could, for example, print an instance to see the default `toString()` implementation in action or create two points with the same coordinates and observe that they are `equal`:
+To experiment with it, create a second file `Main.java`, with a `main` method and construct some `Point` instances.
+For example, you could print an instance to see the default `toString()` implementation in action or create two points with the same coordinates and observe that they are `equal`:
 
 ```java
 <copy>
