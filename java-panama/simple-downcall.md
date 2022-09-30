@@ -15,10 +15,9 @@ In this lab, you will write your first downcall.
 
 ## Task: A Simple Downcall
 
-In this lab, you will develop a simple Java application that will invoke the native C `atoi` function to convert a string to an int. 
+You will develop a simple Java application that will invoke the native C `atoi` function to convert a `string` to an `int`. 
 
-
-> The [C `atoi` function](https://cplusplus.com/reference/cstdlib/atoi/) is part of the [C standard library](https://en.wikipedia.org/wiki/C_standard_library) and has the following signature: `int atoi ( const char * str );`
+The [`atoi`](https://cplusplus.com/reference/cstdlib/atoi/) function is part of the [C standard library](https://en.wikipedia.org/wiki/C_standard_library) and has the following signature: `int atoi ( const char * str );`
 It parses the C-string `str` interpreting its content as an integral number, which is returned as a value of type `int`, it returns zero if no conversion is performed.
 
 As mentioned earlier, the steps to perform a downcall are:
@@ -31,7 +30,7 @@ As mentioned earlier, the steps to perform a downcall are:
 
 1. Create the class
 
-Using Cloud Editor, open the "lab" directory and create a file named "Simple.java" with the following skeleton.
+Using Cloud Editor, create a Java class named "Simple.java" with the following skeleton.
 
 
 ```java
@@ -55,7 +54,7 @@ Specify the function name.
 var functionName = "atoi";
 </copy>
 ```
-Instantiate the linker with a symbol lookup. This will be necessary to find the target function.
+A [linker](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/foreign/Linker.html) is a key element that will enable access to foreign functions from Java code. Instantiate the linker with a [symbol lookup](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/foreign/SymbolLookup.html). This is required to find the target function. 
 
 
 ```java
@@ -66,7 +65,7 @@ SymbolLookup linkerLookup = linker.defaultLookup();</copy>
 
 2. Allocate the required foreign memory
 
-You can now use the linker to find the native function.
+Perform the lookup with the target function name, this will return a [memory segment](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/foreign/MemorySegment.html).
 
 ```
 MemorySegment memSegment = linkerLookup.lookup(functionName).get();
@@ -74,7 +73,7 @@ MemorySegment memSegment = linkerLookup.lookup(functionName).get();
 
 3. Create a FunctionDecriptor
 
-You should now create a FunctionDescriptor that matches the `int atoi ( const char * str )` signature.
+You should now create a [FunctionDescriptor](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html) that matches the `int atoi ( const char * str )` signature.
 
 ```java
 <copy>FunctionDescriptor funcDescriptor = FunctionDescriptor.of(JAVA_INT, ADDRESS);</copy>
@@ -82,7 +81,7 @@ You should now create a FunctionDescriptor that matches the `int atoi ( const ch
 
 4. Create a Method Handle
 
-Using the FunctionDescriptor, you can now create the corresponding Method Handle.
+Using the FunctionDescriptor, you can now create the corresponding [Method Handle](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/invoke/MethodHandle.html).
 
 ```java
 <copy>MethodHandle funcHandle = linker.downcallHandle(memSegment.address(), funcDescriptor);</copy>
@@ -164,10 +163,7 @@ You can get rid of the FFM warnings but also perform the compilation and executi
 <copy>java --enable-preview --source 19 --enable-native-access=ALL-UNNAMED Simple.java</copy>
 ```
 
-💡 Notice that in this case, you are passing a *.java* source file to the Java launcher instead of an usual *.class* compiled class.
 
-
-   
 ## Conclusion
 
 Congratulations, you just wrote your first downcall using the Foreign Function & Memory API! Now using a native function to perform such a trivial conversion is, at best, a convoluted approach. A simple `java.lang.Integer.valueOf(int)`would do the same job more easily but that's not the point. The point here is to show you the different steps required to invoke, from Java, a foreign function. Also, this example has been simplified as it doesn't, for example, deal with error handling (ex. what if a lookup fails?). Some of those points will be discussed later.

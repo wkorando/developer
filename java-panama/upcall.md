@@ -12,7 +12,9 @@ Estimated Time: 15 minutes
 
 ## Task 1: Short Pointer Primer
 
-There are 2 ways to pass parameters to a function in C: (1) by value, and (2) by reference, i.e. using a pointer. For instance, the C `puts` function accepts as parameter a pointer to a _char_ array. Given that Java does not expose pointers to developers, the concept of pointer is obscure if not unknown to most Java developers. In short, a pointer is "simply" a variable whose value is the address of another variable.
+Given that Java does not expose pointers to developers, the concept of pointer is obscure if not unknown to most Java developers. Before going further, this short explanation might be useful.
+
+In C, there are 2 ways to pass parameters to a function: (1) by value, and (2) by reference, i.e. using a pointer. For instance, the C `puts` function accepts as parameter a pointer to a _char_ array.  In short, a pointer is "simply" a variable whose value is the address of another variable.
 
 ```c
       int puts(const char* s);
@@ -20,7 +22,7 @@ There are 2 ways to pass parameters to a function in C: (1) by value, and (2) by
 
 💡 The asterisk * is used to declare a pointer. 
 
-Native C types such as _int_, _char_, _struct_, etc., can be accessed through pointers. In addition to pointing to some data, a pointer can also point to C function. A function pointer is a variable that stores the address of a function, function that can later be invoked through this function pointer.
+Native C types such as _int_, _char_, _struct_, etc., can be accessed through pointers. In addition to pointing to some data, a pointer can also point to C function. A **function pointer** is a **variable that stores the address of a function**, function that can later be invoked through this function pointer.
 
 
 ```c
@@ -63,13 +65,13 @@ Following this pattern, a pointer to the C `printf` function would have the foll
       </copy>
 ```
 
-Note that `printfPtr` has a variadic arguments definition as denoted by the `...` agrument.
+Note that `printfPtr` has a variadic arguments definition as denoted by the `...` argument. Also, note that `&` (ampersand) is the C reference operator but that's probably already more than you should know in the context of the workshop.
 
 ## Task 2: Invoking a Java method from a C function
 
 1. Create a C function
 
-This simple `callback_function` function will accept a pointer to another function that doesn't return something, i.e. `void()`: `*ptrToFunction()`. Later in this section, we will see how this function can invoke some Java code, how it can make an upcall.
+This simple `callback_function` function will accept a pointer to another function that doesn't return something, i.e. `void()`: `*ptrToFunction()`. Later in this section, we will see how this function can invoke some Java code, i.e. how it can make an upcall.
 
 Create a C source file named `upcall.c` with the following content.
 
@@ -175,7 +177,7 @@ Define a method handle for the `void callback()` method.
          System.load(System.getProperty("lib.path"));
 
          try {
-             // creat a Method Handle for the Upcall#callback method.
+             // Method Handle for the Upcall#callback method.
              callbackHandle = MethodHandles
                  .lookup()
                  .findStatic(
@@ -221,7 +223,7 @@ Add its correspdonding Function Descriptor.
 
 6. Invoke the Foreign Function
 
-To invoke a foregin function, you need to create an upcall stub. A **stub** is a proxy object which is communicating with a `foreign` provider, with a foregin function. Update the main() method as follow.
+To invoke a foregin function, you need to create an [upcall stub](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/foreign/Linker.html#upcallStub(java.lang.invoke.MethodHandle,java.lang.foreign.FunctionDescriptor,java.lang.foreign.MemorySession)). A **stub** is a proxy object which is communicating with a 'remote provider', a foregin function in the case of the FFM API. Update the `main()` method as follow.
 
 
 ```java
@@ -240,7 +242,7 @@ To invoke a foregin function, you need to create an upcall stub. A **stub** is a
 
 7. Test the upcall
 
-To compile the code, you have to fix the `import`s as follow, and update the signature of the `main` method to throw a `Throwable`.
+To compile the code, you have to fix the `import`s as follow, and update the `main()` method signature to throw a `Throwable`.
 
 ```java
       <copy>
@@ -277,8 +279,7 @@ Java     main() method exit
 
 ## Conclusion
 
-💡 In the spirit of showing how things work, those examples sometimes take a few shortcuts. For example, potential errores aren't always handled properly, arguments are not validated, etc. Those and other aspects such as security, synchronization, etc. are matters that should always be properly handled in any code that will go into production but that is not the focus of this lab.
-
+Congratulations, you have developed your first upcall with the FFM API. You can now move to the next Lab.
 
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)

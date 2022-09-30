@@ -5,7 +5,7 @@
 
 This lab walks you through the the jextract tool and show you how to use it.
 
-Estimated Time: 15 minutes
+Estimated Time: 20 minutes
 
 
 ## Task 1: Jextract overview
@@ -230,7 +230,7 @@ Option                         Description
 The goal of jextract is to mechanically generate Java bindings from C native library headers. This can be done with the following command.
 
 ```text
-> <copy>jextract --source -t clang.stdlib.stdio -I /usr/include --output ~/lab/src/main/java /usr/include/stdio.h</copy>
+> <copy>jextract --source -t clang.stdlib.stdio -I /usr/include --output ~/lab/src/main/java /usr/include/s	tdio.h</copy>
 ```
 
 Let's break down the different arguments.
@@ -445,7 +445,8 @@ You can now compare this code to the code you had to write in the "A Simple Down
 
 ## Conclusion
 
-In this lab, you have used jextract, a tool that generates the infrastructure code required for using foreign functions. Jextract helps developers as they can focus on writing the logic that will rely on this generated code to invoke foreign functions. An additional benefit of jextract is that the generated code will always be optimized to take benefits of various underlying optimizations (ex. JIT compiler and HotSpot optimizations), another important aspect that developers won't have to worry about!
+In this lab, you have used jextract, a tool that generates the infrastructure code required for using foreign functions. Jextract helps developers as they can focus on writing the logic that will rely on this generated code to invoke foreign functions. An additional benefit of jextract is that the generated code will always be optimized to take benefits of various underlying optimizations (ex. JIT compiler and HotSpot optimizations), another important aspect that developers won't have to worry about! By analyzing the code that jextract generates also help to understand better the FFM API.
+
 
 
 ## Learn More
