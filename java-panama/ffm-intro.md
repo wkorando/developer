@@ -76,10 +76,11 @@ This workshop requires those flags to be set as the FFM API is a preview feature
 
 ```text
 > javac MyClass.java
-MyClass.java:42: error: ofPlatform() is a preview API and is disabled by default.
-     var pthread = Thread.ofPlatform()
-                          ^
-  (use --enable-preview to enable preview APIs)
+MyClass.java:42: error: java.lang.foreign.Linker is a preview API and is disabled by default.
+    Linker linker = Linker.nativeLinker();
+    ^
+…
+(use --enable-preview to enable preview APIs)
 1 error
 ```
 

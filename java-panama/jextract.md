@@ -60,6 +60,7 @@ Jextract uses libclang to parse C header files and extract entities from native 
 Although jextract is developed in the [OpenJDK Code Tools project](https://openjdk.org/projects/code-tools/), it is not per se part of the JDK itself. This is due to several reasons. First, jextract isn't yet finished and is only available, at this stage, via Early-Access builds. Second, not all Java developers write code that needs to interoperate with native code. Third, and probably the main reason, jextract would significantly increase the size of the JDK. For all those reasons, jextract is a separate bundle that needs to be downloaded independently.
 
 
+💡 This workshop uses the [jextract Early-Access build published in July](https://jdk.java.net/jextract/). While waiting for the next early-access build, you can always build jextract yourself using the instructions at [https://github.com/openjdk/jextract](https://github.com/openjdk/jextract). 
 
 Installing jextract is straight forward.
 
@@ -142,7 +143,7 @@ Create the corresponding "helloworld.h" header.
 #ifndef helloworld_h
 #define helloworld_h
 
-extern void helloworld(void);
+void helloworld(void);
 
 #endif
 </copy>
@@ -456,4 +457,4 @@ In this lab, you have used jextract, a tool that generates the infrastructure co
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
 * **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
-* **Last Updated By/Date** - David Delabassée, Sept. 27 2022
+* **Last Updated By/Date** - David Delabassée, Oct. 1 2022
