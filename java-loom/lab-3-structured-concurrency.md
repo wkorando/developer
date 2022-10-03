@@ -17,7 +17,12 @@ In this lab, you will:
 
 ### Prerequisites
 
-If you haven't already clone the repository: 
+If you haven't already, clone the repository and change your directory to the base of the repository:
+
+```
+git clone TODO
+cd TODO
+```
 
 Move to the `org.paumard.loom.structuredconcurrency` package, which contains the code for completing this lab. 
 

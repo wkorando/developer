@@ -1,8 +1,10 @@
 # Introduction
 
-This lab covers two aspects of the Loom project: virtual threads and structured concurrency.
+This lab covers two aspects of the Loom project: Virtual Threads and structured concurrency.
 
-You need a JDK 19 to run it. Virtual threads are a preview feature of the JDK 19, so you need to enable preview features both at compile time and at run time.
+**Virtual Threads** - Virtual Threads are lightweight threads that exist only in memory. The JVM is able to manage these threads and attach them thread to a platform thread when it needs processing done, and detach them when they are blocked or otherwise inactive. Virtual Threads allow Java applications to be written in a familiar blocking style while having horizontal scalability comparable to an application written in an asynchronous reactive style. 
+
+**Structured Concurrency** - Structured concurrency allows for a single unit of work to be broken up into multiple threads that can be executed concurrently. Structured concurrency provides APIs that allow common handling of all the tasks executed within the structured concurrency block. For example canceling all remaining tasks when a single task completes or fails, or waiting until all tasks are complete. 
 
 ## About this Workshop
 

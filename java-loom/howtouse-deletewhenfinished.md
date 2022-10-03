@@ -41,7 +41,7 @@ sample-workshop/
 ### FreeTier vs LiveLabs
 
 * "FreeTier" - includes Free Trials, Paid Accounts and for some workshops, Always Free accounts (brown button)
-* "LiveLabs" - these are workshops that use Oracle provided tenancies (green button)
+* "LiveLabs" - these are workshops that use Oracle-provided tenancies (green button)
 * "Desktop"  - this is a new deployment where the workshop is encapsulated in a NoVNC environment running in a compute instance
 
 ### About the Workshop

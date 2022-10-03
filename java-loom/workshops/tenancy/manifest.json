@@ -5,15 +5,19 @@
     "tutorials": [
         {
             "title": "Introduction",
-            "filename": "../../introduction.md"
+            "filename": "../../lab-0-introduction.md"
         },
         {
-            "title": "Lab 1: Exploring Virtual Threads",
-            "filename": "../../lab1.md"
+            "title": "Setup",
+            "filename": "../../lab-1-environment.md"
         },
         {
-            "title": "Lab 2: Exploring Structured Concurrency",
-            "filename": "../../lab2.md"
+            "title": "Exploring Virtual Threads",
+            "filename": "../../lab-2-virtual-threads.md"
+        },
+        {
+            "title": "Exploring Structured Concurrency",
+            "filename": "../../lab-3-structured-concurrency.md"
         }
     ]
 }

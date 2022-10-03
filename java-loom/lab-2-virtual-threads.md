@@ -3,7 +3,7 @@
 ## Introduction
 
 
-This lab guides you through Virtual Threads and related API.
+This lab guides you through Virtual Threads and related APIs.
 
 Estimated Time: 25 minutes
 
@@ -17,7 +17,12 @@ In this lab, you will:
 
 ### Prerequisites (Optional)
 
-If you haven't already clone the repository: 
+If you haven't already, clone the repository and change your directory to the base of the repository: 
+
+```
+git clone TODO
+cd TODO
+```
 
 Move to the `org.paumard.loom.virtualthread` package, which contains the code for completing this lab. 
 
